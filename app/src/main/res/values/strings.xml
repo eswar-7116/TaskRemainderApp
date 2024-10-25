@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task Remainder</string>
+    <string name="title_activity_add_todo">AddTodoActivity</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+</resources>
