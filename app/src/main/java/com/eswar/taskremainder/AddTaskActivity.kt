@@ -1,8 +1,5 @@
 package com.eswar.taskremainder
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -110,60 +106,17 @@ class AddTaskActivity : ComponentActivity() {
                                 }.also { interactionSource ->
                                     LaunchedEffect(interactionSource) {
                                         interactionSource.interactions.collect { interaction ->
-                                            if (interaction is PressInteraction.Release) {
-                                                val calendar = Calendar.getInstance()
-                                                val day = calendar.get(Calendar.DATE)
-                                                val month = calendar.get(Calendar.MONTH)
-                                                val year = calendar.get(Calendar.YEAR)
-                                                val hour = calendar.get(Calendar.HOUR_OF_DAY)
-                                                val minutes = calendar.get(Calendar.MINUTE)
-                                                val seconds = calendar.get(Calendar.SECOND)
-                                                val milliSeconds = calendar.get(Calendar.MILLISECOND)
-
-                                                DatePickerDialog(
-                                                    this@AddTaskActivity,
-                                                    { _, selectedYear, selectedMonth, selectedDay ->
-                                                        TimePickerDialog(
-                                                            this@AddTaskActivity,
-                                                            { _, selectedHour24, selectedMinutes ->
-                                                                val amPm: String?
-                                                                val selectedHour12: Int?
-
-                                                                if (selectedHour24 == 0) {
-                                                                    amPm = "AM"
-                                                                    selectedHour12 = 12
-                                                                } else if (selectedHour24 > 12) {
-                                                                    amPm = "PM"
-                                                                    selectedHour12 =
-                                                                        selectedHour24 - 12
-                                                                } else {
-                                                                    amPm =
-                                                                        if (selectedHour24 == 12) "PM"
-                                                                        else "AM"
-                                                                    selectedHour12 = selectedHour24
-                                                                }
-
-                                                                dueDateTime =
-                                                                    "$selectedDay/${selectedMonth + 1}/$selectedYear $selectedHour12:$selectedMinutes $amPm"
-                                                            },
-                                                            hour,
-                                                            minutes,
-                                                            false
-                                                        ).show()
-                                                    },
-                                                    day,
-                                                    month,
-                                                    year
-                                                ).apply {
-                                                    datePicker.minDate = calendar.timeInMillis
-                                                    show()
-                                                }
-
-                                                dateCreated = "$day/${month + 1}/$year $hour:$minutes:$seconds:$milliSeconds"
+                                            checkInteraction(
+                                                this@AddTaskActivity,
+                                                interaction
+                                            ) { dates ->
+                                                dueDateTime = dates.first
+                                                dateCreated = dates.second
                                             }
                                         }
                                     }
-                                })
+                                }
+                            )
 
                             Spacer(Modifier.height(75.dp))
 
