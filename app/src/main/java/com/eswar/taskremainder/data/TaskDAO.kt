@@ -1,5 +1,6 @@
 package com.eswar.taskremainder.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
@@ -8,7 +9,7 @@ import androidx.room.Upsert
 interface TaskDAO {
 
     @Query("SELECT * FROM Task")
-    suspend fun getAllTasks(): List<Task>
+    fun getAllTasks(): LiveData<List<Task>>
 
     @Upsert
     suspend fun updateTask(task: Task)
