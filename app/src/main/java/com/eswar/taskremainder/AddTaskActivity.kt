@@ -50,7 +50,7 @@ class AddTaskActivity : ComponentActivity() {
                 var name by remember { mutableStateOf("") }
                 var info by remember { mutableStateOf("") }
                 var dueDateTime by remember { mutableStateOf("") }
-                var dateCreated: String? = null
+                lateinit var dateCreated: String
                 val blueTheme = colorResource(R.color.blueTheme)
                 val whiteBackground = colorResource(R.color.ic_launcher_background)
 
@@ -181,7 +181,7 @@ class AddTaskActivity : ComponentActivity() {
                                             info = info.trim(),
                                             dueDateAndTime = dueDateTime,
                                             isCompleted = 0,
-                                            creationDateAndTime = dateCreated!!
+                                            creationDateAndTime = dateCreated
                                         )
                                         viewModel?.updateTask(createdTask)
                                         finish()
