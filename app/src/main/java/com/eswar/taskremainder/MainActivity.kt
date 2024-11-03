@@ -95,9 +95,16 @@ fun App(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 items(tasks?.value ?: getTasksForPreview()) { task ->
-                    TaskItem(task, 0) {
-                        viewModel?.deleteTask(task)
-                    }
+                    TaskItem(
+                        task = task,
+                        deleteOnClick = {
+                            viewModel?.deleteTask(task)
+                        },
+                        checkboxOnClick = {
+                            task.isCompleted = if (task.isCompleted != 0) 0 else 1
+                            viewModel?.updateTask(task)
+                        }
+                    )
                     Spacer(Modifier.height(5.dp))
                 }
             }

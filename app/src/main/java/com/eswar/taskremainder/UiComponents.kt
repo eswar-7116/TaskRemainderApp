@@ -24,6 +24,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -144,7 +146,8 @@ fun getTasksForPreview(): List<Task> {
 }
 
 @Composable
-fun TaskItem(task: Task, isCompleted: Int, deleteOnClick: () -> Unit) {
+fun TaskItem(task: Task, deleteOnClick: () -> Unit, checkboxOnClick: () -> Unit) {
+    var checkboxState = remember { mutableStateOf(task.isCompleted != 0) }
     Row(
         Modifier
             .clip(RoundedCornerShape(15))
@@ -156,8 +159,11 @@ fun TaskItem(task: Task, isCompleted: Int, deleteOnClick: () -> Unit) {
     ) {
         Row {
             Checkbox(
-                checked = isCompleted != 0,
-                onCheckedChange = {}
+                checked = checkboxState.value,
+                onCheckedChange = {
+                    checkboxState.value = ! checkboxState.value
+                    checkboxOnClick()
+                }
             )
 
             Column {
@@ -214,7 +220,7 @@ fun TaskItemPreview() {
                 dueDateAndTime = "28.10.2024 7:00 AM",
                 isCompleted = 0,
                 creationDateAndTime = "27.10.2024 9:00 PM"
-            ), 0
-        ) {}
+            ), {}, {}
+        )
     }
 }

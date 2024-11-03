@@ -9,7 +9,7 @@ data class Task(
     val name: String,
     val info: String,
     val dueDateAndTime: String,
-    val isCompleted: Int,
+    var isCompleted: Int,
     val creationDateAndTime: String
 ) {
     override fun toString(): String {
