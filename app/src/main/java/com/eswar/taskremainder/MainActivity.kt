@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -96,7 +95,10 @@ fun App(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 items(tasks?.value ?: getTasksForPreview()) { task ->
-                    Text(task.name)
+                    TaskItem(task, 0) {
+
+                    }
+                    Spacer(Modifier.height(5.dp))
                 }
             }
         }
@@ -108,7 +110,9 @@ fun App(
             shape = RoundedCornerShape(30),
             containerColor = blueTheme,
             onClick = {
-                (context as Activity).startActivity(Intent(context, AddTaskActivity::class.java))
+                (context as Activity).also { activity ->
+                    activity.startActivity(Intent(activity, AddTaskActivity::class.java))
+                }
             }
         ) {
             Icon(
