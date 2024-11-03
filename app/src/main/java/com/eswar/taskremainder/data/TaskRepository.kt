@@ -11,4 +11,8 @@ class TaskRepository(private val taskDao: TaskDAO) {
     suspend fun updateTask(task: Task) = withContext(Dispatchers.IO) {
         taskDao.updateTask(task)
     }
+
+    suspend fun deleteTask(task: Task) = withContext(Dispatchers.IO) {
+        taskDao.deleteTask(task)
+    }
 }

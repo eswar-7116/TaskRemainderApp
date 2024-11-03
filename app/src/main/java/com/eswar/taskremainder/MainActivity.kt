@@ -96,7 +96,7 @@ fun App(
             ) {
                 items(tasks?.value ?: getTasksForPreview()) { task ->
                     TaskItem(task, 0) {
-
+                        viewModel?.deleteTask(task)
                     }
                     Spacer(Modifier.height(5.dp))
                 }

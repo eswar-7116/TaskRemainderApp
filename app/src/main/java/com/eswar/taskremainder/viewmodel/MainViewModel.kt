@@ -13,4 +13,8 @@ class MainViewModel(private val taskRepository: TaskRepository): ViewModel() {
     fun updateTask(task: Task) = viewModelScope.launch {
         taskRepository.updateTask(task)
     }
+
+    fun deleteTask(task: Task) = viewModelScope.launch {
+        taskRepository.deleteTask(task)
+    }
 }
